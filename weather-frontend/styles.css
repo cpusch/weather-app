@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+.body {
+  font-family: Roboto;
+  font-weight: 400;
+  width: 100%;
+  margin: 0;
+  font-size: 1.6rem;
+}
+/* Add your CSS styles for the weather cards here */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.weather-map {
+  flex: 1;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+.weather-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  max-width: 800px;
+}
+.weather-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.weather-card p {
+  font-size: 16px;
+}
+
+/* Add your CSS styles for the search bar here */
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+button:hover {
+  background-color: #0056b3;
+}
