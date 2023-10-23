@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+require("dotenv").config();
 const app = express();
 const port = 3000;
 
@@ -13,17 +14,17 @@ app.get("/weather/:cityName", async (req, res) => {
     const cityName = req.params.cityName;
 
     const cityCords = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=205ab8c5605847d0ff1d8cf324e1b9ad`,
+      `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${process.env.WEATHER_API}`,
     );
     lat = cityCords.data[0].lat;
     lon = cityCords.data[0].lon;
 
     const weatherResponse = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=205ab8c5605847d0ff1d8cf324e1b9ad&exclude=current,minutely,hourly,alerts&units=metric`,
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API}&exclude=current,minutely,hourly,alerts&units=metric`,
     );
 
     const pollutionResponse = await axios.get(
-      `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=205ab8c5605847d0ff1d8cf324e1b9ad&exclude`,
+      `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API}`,
     );
 
     const weatherData = weatherResponse.data.daily.slice(1, 6);
@@ -52,7 +53,6 @@ app.get("/weather/:cityName", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 function formatTimestamp(unixTimestamp) {
   const daysOfWeek = [
