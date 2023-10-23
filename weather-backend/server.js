@@ -28,11 +28,6 @@ app.get("/weather/:cityName", async (req, res) => {
     );
 
     const weatherData = weatherResponse.data.daily.slice(1, 6);
-
-    //if there is pm_2.5 > 10 wearMask is true
-    const wearMask = await pollutionResponse.data.list.some(
-      (dict) => dict.main.aqi > 2,
-    );
     const weatherDataReturn = [];
 
     weatherData.forEach((dict) => {
@@ -43,11 +38,24 @@ app.get("/weather/:cityName", async (req, res) => {
         weather: dict.weather,
         rain: dict.rain === undefined ? 0 : dict.rain,
         wind: dict.wind_speed === undefined ? 0 : dict.wind_speed,
-        pollution: wearMask,
       });
     });
+    //if there is pm_2.5 > 10 wearMask is true
+    const wearMask = pollutionResponse.data.list.some(
+      (dict) => dict.main.aqi > 2,
+    );
+    //if there is any rain predicted rainjacket will be true
+    const willRain = weatherDataReturn.some((dict) => dict.rain > 0);
 
-    res.json(weatherDataReturn);
+    res.json({
+      forecast: weatherDataReturn,
+      wearMask: wearMask
+        ? "pm_2.5 > 10 is predicted, make sure to pack a mask!"
+        : "No need to pack a mask",
+      willRain: willRain
+        ? "Rain in the forecast. Make sure to bring an umbrella!"
+        : "No rain, leave the umbrella at home!",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
