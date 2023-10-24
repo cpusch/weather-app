@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
@@ -28,16 +28,16 @@
           />
           <button @click="searchWeather">Search</button>
         </div>
-        <div class="weather-tips">
-          <h2>Travel Tips!</h2>
-          <ul>
-            <li>{{ weatherData.wearMask }}</li>
-            <li>{{ weatherData.willRain }}</li>
-          </ul>
+        <div v-if="loaded" class="weather-tips">
+          <h2>Packing Tips!</h2>
+          <p>{{ weatherData.wearMask }}</p>
+          <p>{{ weatherData.willRain }}</p>
         </div>
       </div>
 
-      <div v-if="loading" class="content">Loading...</div>
+      <div v-if="loading" class="content">
+        <div class="spinner"></div>
+      </div>
       <div v-else class="content">
         <div
           v-for="(day, index) in weatherData.forecast"
@@ -45,13 +45,18 @@
           class="weather-card"
         >
           <h2>{{ day.date }}</h2>
-          <p>Summary: {{ day.summary }}</p>
-          <p>
-            Temperature: {{ day.temp.day }}°C (Min: {{ day.temp.min }}°C, Max:
-            {{ day.temp.max }}°C)
-          </p>
-          <p>Rain Fall: {{ day.rain }} mm</p>
-          <p>Wind Speed: {{ day.wind }} m/s</p>
+          <div class="info">
+            <p class="summary">
+              <i class="info-icon">ⓘ</i>
+              <span class="tooltip">{{ day.summary }}</span>
+            </p>
+            <p>
+              <b>Temperature:</b> {{ day.temp.day }}°C (Min: {{ day.temp.min
+              }}°C, Max:{{ day.temp.max }}°C)
+            </p>
+            <p><b>Rain Fall:</b> {{ day.rain }} mm</p>
+            <p><b>Wind Speed:</b> {{ day.wind }} m/s</p>
+          </div>
         </div>
       </div>
     </div>
