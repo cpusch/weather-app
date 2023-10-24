@@ -2,12 +2,14 @@ new Vue({
   el: "#app",
   data: {
     loading: false,
+    loaded: false,
     weatherData: [],
     city: "", // Store the city entered by the user
   },
   methods: {
     searchWeather() {
       console.log("pressed");
+      this.loaded = false;
       this.loading = true;
       // Construct the API URL with the user's entered city
       const apiUrl = `http://127.0.0.1:3000/weather/${this.city}`;
@@ -22,6 +24,7 @@ new Vue({
         })
         .finally(() => {
           this.loading = false;
+          this.loaded = true;
         });
     },
   },
