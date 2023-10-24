@@ -1,10 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
-.body {
-  font-family: Roboto;
+body {
+  font-family: "Roboto";
   font-weight: 400;
   width: 100%;
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1rem;
+}
+
+.header {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 /* Add your CSS styles for the weather cards here */
 .content {
@@ -12,10 +17,11 @@
   flex-wrap: wrap;
 }
 
-.weather-map {
+.weather-tips {
   flex: 1;
   padding: 20px;
   background-color: #f0f0f0;
+  width: 350px;
 }
 .weather-card {
   flex: 1;
@@ -43,21 +49,25 @@
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  max-width: 350px;
 }
 input[type="text"] {
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   flex-grow: 1;
+  font-size: medium;
 }
 button {
-  padding: 10px 20px;
+  padding: 20px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
+  font-weight: 400;
+  font-size: medium;
 }
 button:hover {
   background-color: #0056b3;
