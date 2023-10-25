@@ -29,17 +29,28 @@ app.get("/weather/:cityName", async (req, res) => {
 
     const weatherData = weatherResponse.data.daily.slice(1, 6);
     const weatherDataReturn = [];
+    const tempArr = [];
+    const rainArr = [];
+    const windArr = [];
 
     weatherData.forEach((dict) => {
+      tempArr.push(dict.temp.day);
+      rainArr.push(dict.rain === undefined ? 0 : dict.rain);
+      windArr.push(dict.wind_speed === undefined ? 0 : dict.wind_speed);
       weatherDataReturn.push({
         date: formatTimestamp(dict.dt),
         temp: dict.temp,
         summary: dict.summary,
-        weather: dict.weather,
+        weather: dict.weather[0],
         rain: dict.rain === undefined ? 0 : dict.rain,
         wind: dict.wind_speed === undefined ? 0 : dict.wind_speed,
+        icon: `https://openweathermap.org/img/wn/${dict.weather[0].icon}@2x.png`,
       });
     });
+    const avgTemp = tempArr.reduce((a, b) => a + b) / tempArr.length;
+    const avgRain = rainArr.reduce((a, b) => a + b) / rainArr.length;
+    const avgWind = windArr.reduce((a, b) => a + b) / windArr.length;
+
     //if there is pm_2.5 > 10 wearMask is true
     const wearMask = pollutionResponse.data.list.some(
       (dict) => dict.main.aqi > 2,
@@ -55,12 +66,22 @@ app.get("/weather/:cityName", async (req, res) => {
       willRain: willRain
         ? "Rain in the forecast. Make sure to bring an umbrella!"
         : "No rain, leave the umbrella at home!",
+      packTip: packRecommendation(avgTemp),
+      avgTemp: avgTemp.toFixed(1),
+      avgRain: avgRain.toFixed(1),
+      avgWind: avgWind.toFixed(1),
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+function packRecommendation(average) {
+  if (average > 23) return "Make sure to pack for Hot Weather!";
+  else if (average < 13) return "Make sure to pack for Cold Weather!";
+  else return "Make sure to pack for Mild Weather!";
+}
 
 function formatTimestamp(unixTimestamp) {
   const daysOfWeek = [
