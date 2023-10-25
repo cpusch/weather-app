@@ -14,7 +14,9 @@
   </head>
   <body>
     <div class="header">
-      <h1>5-Day Weather Forecast</h1>
+      <h1>
+        ☀️ ☁️ 🌧️ 🌩️ ☀️ ☁️ 🌧️ 🌩️ 5-Day Weather Forecast ☁️ 🌧️ 🌩️ ☀️ ☁️ 🌧️ 🌩️ ☀️
+      </h1>
     </div>
     <div class="container" id="app">
       <div class="side-bar">
@@ -28,10 +30,16 @@
           />
           <button @click="searchWeather">Search</button>
         </div>
+        <!-- <div v-if="loaded" class="weather-summary"></div> -->
         <div v-if="loaded" class="weather-tips">
+          <h2>Five Day Average:</h2>
+          <h3>Temp: {{weatherData.avgTemp}} °C</h3>
+          <h3>Wind: {{weatherData.avgWind}} m/s</h3>
+          <h3>Rain: {{weatherData.avgRain}} mm</h3>
           <h2>Packing Tips!</h2>
           <p>{{ weatherData.wearMask }}</p>
           <p>{{ weatherData.willRain }}</p>
+          <p>{{weatherData.packTip}}</p>
         </div>
       </div>
 
@@ -50,6 +58,7 @@
               <i class="info-icon">ⓘ</i>
               <span class="tooltip">{{ day.summary }}</span>
             </p>
+            <img :src="day.icon" height="100" width="100" class="icon" />
             <p>
               <b>Temperature:</b> {{ day.temp.day }}°C (Min: {{ day.temp.min
               }}°C, Max:{{ day.temp.max }}°C)
