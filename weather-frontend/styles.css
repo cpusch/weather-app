@@ -147,14 +147,18 @@ body {
   right: 5px;
 }
 
+.info {
+  display: flex;
+  flex-direction: column;
+}
 .info .tooltip {
   display: none;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  background-color: #232528;
+  color: #009ffd;
   padding: 5px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
   z-index: 1;
 }
 
