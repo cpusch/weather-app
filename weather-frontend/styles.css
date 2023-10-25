@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
   margin: 0;
   padding: 0;
@@ -11,9 +9,10 @@ body {
 
 .header {
   background-color: #232528;
-  color: #eaf6ff;
+  color: #ffac33;
   text-align: center;
-  padding: 20px;
+  /* padding: 0px; */
+  font-size: 27px;
 }
 
 .container {
@@ -23,17 +22,31 @@ body {
 }
 
 .side-bar {
-  background-color: #eaf6ffc6;
-  width: 250px;
+  background-color: #9ba1a6;
+  width: 220px;
+  min-width: 220px;
   padding: 20px;
   border-right: 1px solid #232528;
+  position: relative;
 }
 .weather-tips {
-  background-color: #ffa400;
-  border: 1px solid #232528;
+  background-color: #ffac33;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  color: #232528;
+  position: absolute;
+  top: 25%;
+  left: 5px;
+  right: 5px;
 }
 .weather-tips h2 {
   text-align: center;
+  margin-top: 2px;
+  border-bottom: 1px solid #232528;
+  border-top: 1px solid #232528;
+}
+.weather-tips p {
+  padding: 5px;
 }
 .search-bar {
   display: flex;
@@ -43,16 +56,15 @@ body {
 .search-bar input[type="text"] {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ffa400;
-  margin-bottom: 10px;
+  border: 1px solid #ffac33;
   margin-right: 10px;
-  margin-top: 9px;
 }
 
 .search-bar button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 50%;
   padding: 10px;
-  background-color: #ffa400;
+  background-color: #ffac33;
   color: #eaf6ff;
   border: none;
   border-radius: 5px;
@@ -84,7 +96,7 @@ body {
 
 .weather-card h2 {
   margin-top: 0;
-  color: #ffa400;
+  color: #ffac33;
   text-align: center;
   font-size: 30px;
   margin-bottom: 0px;
@@ -109,7 +121,7 @@ body {
   margin: auto;
   border: 20px solid #eaf0f6;
   border-radius: 50%;
-  border-top: 20px solid #ffa400;
+  border-top: 20px solid #ffac33;
   width: 200px;
   height: 200px;
   animation: spinner 4s linear infinite;
@@ -148,4 +160,9 @@ body {
 
 .info .info-icon:hover + .tooltip {
   display: block;
+}
+
+.icon {
+  display: block;
+  margin: 0px auto;
 }
