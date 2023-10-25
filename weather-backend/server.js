@@ -44,6 +44,7 @@ app.get("/weather/:cityName", async (req, res) => {
         weather: dict.weather[0],
         rain: dict.rain === undefined ? 0 : dict.rain,
         wind: dict.wind_speed === undefined ? 0 : dict.wind_speed,
+        pop: (dict.pop * 100).toFixed(0),
         icon: `https://openweathermap.org/img/wn/${dict.weather[0].icon}@2x.png`,
       });
     });
@@ -51,18 +52,21 @@ app.get("/weather/:cityName", async (req, res) => {
     const avgRain = rainArr.reduce((a, b) => a + b) / rainArr.length;
     const avgWind = windArr.reduce((a, b) => a + b) / windArr.length;
 
-    //if there is pm_2.5 > 10 wearMask is true
-    const wearMask = pollutionResponse.data.list.some(
-      (dict) => dict.main.aqi > 2,
-    );
-    //if there is any rain predicted rainjacket will be true
+    const pm2_5Arr = [];
+    pollutionResponse.data.list.forEach((comp) => {
+      pm2_5Arr.push(comp.components.pm2_5);
+    });
+    const avgPM2_5 = pm2_5Arr.reduce((a, b) => a + b) / pm2_5Arr.length;
+
+    //if there is any rain predicted willRain will be true
     const willRain = weatherDataReturn.some((dict) => dict.rain > 0);
 
     res.json({
       forecast: weatherDataReturn,
-      wearMask: wearMask
-        ? "pm_2.5 > 10 is predicted, make sure to pack a mask!"
-        : "No need to pack a mask",
+      wearMask:
+        avgPM2_5 > 10
+          ? "pm_2.5 > 10 is predicted, make sure to pack a mask!"
+          : "No need to pack a mask",
       willRain: willRain
         ? "Rain in the forecast. Make sure to bring an umbrella!"
         : "No rain, leave the umbrella at home!",
@@ -70,6 +74,7 @@ app.get("/weather/:cityName", async (req, res) => {
       avgTemp: avgTemp.toFixed(1),
       avgRain: avgRain.toFixed(1),
       avgWind: avgWind.toFixed(1),
+      avgPM2_5: avgPM2_5.toFixed(1),
     });
   } catch (error) {
     console.error(error);
