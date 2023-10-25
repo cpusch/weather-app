@@ -8,7 +8,6 @@ new Vue({
   },
   methods: {
     searchWeather() {
-      console.log("pressed");
       this.loaded = false;
       this.loading = true;
       // Construct the API URL with the user's entered city
