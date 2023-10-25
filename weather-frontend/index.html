@@ -19,6 +19,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
@@ -40,7 +43,6 @@
           />
           <button @click="searchWeather">Search</button>
         </div>
-        <!-- <div v-if="loaded" class="weather-summary"></div> -->
         <div v-if="loaded" class="weather-tips">
           <h2>Five Day Average:</h2>
           <h3>Temp: {{weatherData.avgTemp}} °C</h3>
@@ -58,25 +60,47 @@
         <div class="spinner"></div>
       </div>
       <div v-else class="content">
-        <div
-          v-for="(day, index) in weatherData.forecast"
-          :key="index"
-          class="weather-card"
-        >
-          <h2>{{ day.date }}</h2>
-          <div class="info">
-            <p class="summary">
-              <i class="info-icon">ⓘ</i>
-              <span class="tooltip">{{ day.summary }}</span>
-            </p>
-            <img :src="day.icon" height="100" width="100" class="icon" />
-            <p>
-              <b>Temperature:</b> {{ day.temp.day }}°C (Min: {{ day.temp.min
-              }}°C, Max:{{ day.temp.max }}°C)
-            </p>
-            <p><b>Rain Fall:</b> {{ day.rain }} mm</p>
-            <p><b>Wind Speed:</b> {{ day.wind }} m/s</p>
-            <p><b>Precipitation Chance:</b> {{ day.pop}}%</p>
+        <div class="weather-card-container">
+          <div
+            v-for="(day, index) in weatherData.forecast"
+            :key="index"
+            class="weather-card"
+          >
+            <h2>{{ day.date }}</h2>
+            <div class="info">
+              <p class="summary">
+                <i class="info-icon">ⓘ</i>
+                <span class="tooltip">{{ day.summary }}</span>
+              </p>
+              <img :src="day.icon" height="100" width="100" class="icon" />
+              <p>
+                <b>Temperature:</b> {{ day.temp.day }}°C (Min: {{ day.temp.min
+                }}°C, Max:{{ day.temp.max }}°C)
+              </p>
+              <p><b>Rain Fall:</b> {{ day.rain }} mm</p>
+              <p><b>Wind Speed:</b> {{ day.wind }} m/s</p>
+              <p><b>Precipitation Chance:</b> {{ day.pop}}%</p>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="chartDataLoaded" class="chart-container">
+          <!-- <div class="chart-container"> -->
+          <div class="chart">
+            <h3>Predicted Temperature</h3>
+            <canvas class="tempChart"></canvas>
+          </div>
+          <div class="chart">
+            <h3>Predicted Wind Speed</h3>
+            <canvas class="windChart"></canvas>
+          </div>
+          <div class="chart">
+            <h3>Predicted Precipitation</h3>
+            <canvas class="rainChart"></canvas>
+          </div>
+          <div class="chart">
+            <h3>Predicted Polution</h3>
+            <canvas class="pollutionChart"></canvas>
           </div>
         </div>
       </div>

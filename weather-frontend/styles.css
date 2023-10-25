@@ -5,6 +5,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #eaf0f6;
 }
 
 .header {
@@ -75,10 +76,14 @@ body {
 }
 .content {
   display: grid;
+  grid-template-columns: repeat(1, 2fr);
+  background-color: #eaf0f6;
+}
+.weather-card-container {
+  display: grid;
   grid-template-columns: repeat(5, 1fr); /* Create 5 equal-width columns */
   grid-gap: -10px; /* Add spacing between cards */
   align-items: flex-start;
-  background-color: #eaf0f6;
   color: white;
 }
 
@@ -169,4 +174,20 @@ body {
 .icon {
   display: block;
   margin: 0px auto;
+}
+
+.chart-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+canvas {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.chart h3 {
+  text-align: center;
 }
